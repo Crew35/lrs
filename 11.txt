@@ -1,0 +1,28 @@
+// Veritabanı bağlantısı
+sqlite3 *db;
+
+// Veritabanı tablolarını oluşturma
+int res = sqlite3_open("database.db", &db);
+if (res != SQLITE_OK) {
+  printf("Veritabanı açılamadı.\n");
+  return 1;
+}
+
+// Personel tablosu oluşturma
+char *sql = "CREATE TABLE personel (id INTEGER PRIMARY KEY AUTOINCREMENT, ad TEXT, soyad TEXT, departman TEXT, pozisyon TEXT);";
+res = sqlite3_exec(db, sql, NULL, NULL, NULL);
+if (res != SQLITE_OK) {
+  printf("Personel tablosu oluşturulamadı.\n");
+  return 1;
+}
+
+// Yetenek tablosu oluşturma
+sql = "CREATE TABLE yetenek (id INTEGER PRIMARY KEY AUTOINCREMENT, personel_id INTEGER, yetenek TEXT);";
+res = sqlite3_exec(db, sql, NULL, NULL, NULL);
+if (res != SQLITE_OK) {
+  printf("Yetenek tablosu oluşturulamadı.\n");
+  return 1;
+}
+
+// Veritabanı kapatma
+sqlite3_close(db);
